@@ -4,7 +4,7 @@ abbrev: "MLS UserInfo VC"
 category: info
 
 docname: draft-barnes-mls-userinfo-vc-latest
-submissiontype: IETF 
+submissiontype: IETF
 number:
 date:
 consensus: true
