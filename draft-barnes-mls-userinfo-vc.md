@@ -107,7 +107,7 @@ will use to messages in the MLS key exchange protocol.
 |          |        Signature                       |
 | Client 2 |<----------------------------------------
 |          |----+
-|          |    | (7) Validate cnf claim using
+|          |    | (7) Validate vc claim using
 |          |<---+     OP's JWK
 +----------+
 
@@ -195,8 +195,7 @@ An MLS client validates a VerifiableCredential with the following steps:
   - Verify that the value of the claim is a JSON object that contains a `credentialSubject` field, as defined in Section 4 of openid-userinfo-vc.
   - Verify `id` field exists and it MUST be a a Decentralized Identifier with DID method jwk (W3c.did-core).
   - Verify that the `jwk` field parses as a JWK.
-  - Compute the JWK Thumbprint of the JWK [!@RFC7638].
-  - Verify that the computed JWK Thumbprint matches the `jkt` field.
+  - Verify that the public key in JWK matches the key in the `id` field.
 
 If all of the above checks pass, the client can use the signature key in the JWK
 for verifying MLS signatures using the signature scheme corresponding to the
