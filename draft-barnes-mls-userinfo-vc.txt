@@ -5,7 +5,7 @@
 Messaging Layer Security                                       R. Barnes
 Internet-Draft                                             S. Nandakumar
 Intended status: Informational                                     Cisco
-Expires: 8 September 2023                                   7 March 2023
+Expires: 9 September 2023                                   8 March 2023
 
 
            UserInfo Verifiable Credentials as MLS Credentials
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 September 2023.
+   This Internet-Draft will expire on 9 September 2023.
 
 Copyright Notice
 
@@ -172,7 +172,7 @@ Table of Contents
    |          |        Signature                       |
    | Client 2 |<----------------------------------------
    |          |----+
-   |          |    | (7) Validate cnf claim using
+   |          |    | (7) Validate vc claim using
    |          |<---+     OP's JWK
    +----------+
 
@@ -287,9 +287,8 @@ Table of Contents
 
       -  Verify that the jwk field parses as a JWK.
 
-      -  Compute the JWK Thumbprint of the JWK [!@RFC7638].
-
-      -  Verify that the computed JWK Thumbprint matches the jkt field.
+      -  Verify that the public key in JWK matches the key in the id
+         field.
 
    If all of the above checks pass, the client can use the signature key
    in the JWK for verifying MLS signatures using the signature scheme
