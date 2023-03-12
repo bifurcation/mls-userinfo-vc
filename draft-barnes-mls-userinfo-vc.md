@@ -53,18 +53,28 @@ Authentication Service in order to achieve full end-to-end security.
 OpenID Connect is widely used to integrate identity providers with applications
 XXXX, but its current core protocol doesn't provide the binding to
 cryptographic keys required for end-to-end security.  When OpenID Connect is
-coupled with the "Verifiable Credential" framework, however, it can be used to provision clients with signed "UserInfo VC" objects, that contain the critical elements of a credential to be used in MLS:
+coupled with the "Verifiable Credential" framework, however, it can be used to
+provision clients with signed "UserInfo VC" objects, that contain the critical
+elements of a credential to be used in MLS:
 
 * Identity attributes for the user of a client
 * A public key whose private key is held by a client
 * A signature over the above by a trusted identity provider
 
-The required updates to OpenID Connect are specfied in "openid-connect-userinfo-vc".  That document defines a profile of the OpenID for Verifiable Credential Issuance protocol for issuing "UserInfo VC", that allows a client to bind a signature key pair to the claims about the UserInfo. The inclusion of "UserInfo VC"
-information in Credential responses is especially compelling when "UserInfo VC"
-responses are signed as JWTs (see Section 5.3.2 of [!@OpenID]). A JWT "UserInfo VC"
-object serves as a signed statement from the provider associating a set of identity attributes to the client's public key.
+The required updates to OpenID Connect are specfied in
+"openid-connect-userinfo-vc".  That document defines a profile of the OpenID for
+Verifiable Credential Issuance protocol for issuing "UserInfo VC", that allows a
+client to bind a signature key pair to the claims about the UserInfo. The
+inclusion of "UserInfo VC" information in Credential responses is especially
+compelling when "UserInfo VC" responses are signed as JWTs (see Section 5.3.2 of
+[!@OpenID]). A JWT "UserInfo VC" object serves as a signed statement from the
+provider associating a set of identity attributes to the client's public key.
 
-In this document, we describe a "VerifiableCredential" credential type for MLS that encapsulates a signed UserInfo object as Verifiable Credential, so that it can be used for authenticating an MLS client. We also describe the validation process that MLS clients use to verify UserInfoVC objects that they receive via MLS.
+In this document, we describe a "VerifiableCredential" credential type for MLS
+that encapsulates a signed UserInfo object as Verifiable Credential, so that it
+can be used for authenticating an MLS client. We also describe the validation
+process that MLS clients use to verify UserInfoVC objects that they receive via
+MLS.
 
 
 # Conventions and Definitions
@@ -117,7 +127,8 @@ will use to messages in the MLS key exchange protocol.
 The basic steps showing OIDC Verifiable Credential based MLS credential flow are shown above.
 
 Client 1 acts as an Holder (in the VC model) and as an MLS client. Client 2
-is an MLS client and acts as Verifier (in the VC model) and implements certain OpenID Connect operations that enable it to verify signed UserInfo VC objects.
+is an MLS client and acts as Verifier (in the VC model) and implements certain
+OpenID Connect operations that enable it to verify signed UserInfo VC objects.
 
 1. Client 1 generates a signature key pair using an algorithm that is supported
    by both MLS and UserInfo VC.
@@ -130,10 +141,18 @@ is an MLS client and acts as Verifier (in the VC model) and implements certain O
    and the access token.
 
 3. The OpenID Provider verifies the proof and create a Credential Response
-   containing the "UserInfo VC", as JWT-formatted VC, attesting the claims that would have been provided by the UserInfo endpoint and public key corresponding to the private key used to compute the proof in the Credential Request.
+   containing the "UserInfo VC", as JWT-formatted VC, attesting the claims that
+   would have been provided by the UserInfo endpoint and public key
+   corresponding to the private key used to compute the proof in the Credential
+   Request.
 
-4. Client 1 generates a `VerifiableCredential` MLS Credential object with the signed
-   UserInfo VC JWT object and the signature key bound to UserInfo VC through "vc" claim. Client 1 embeds the `VerifiableCredential` in an MLS KeyPackage object and signs the KeyPackage object with the corresponding private key. Client 1 sends the KeyPackage to Client 2, e.g., by posting it to a directory from which Client 2 fetches it when it wants to add Client 1 to a group.
+4. Client 1 generates a `VerifiableCredential` MLS Credential object with the
+   signed UserInfo VC JWT object and the signature key bound to UserInfo VC
+   through "vc" claim. Client 1 embeds the `VerifiableCredential` in an MLS
+   KeyPackage object and signs the KeyPackage object with the corresponding
+   private key. Client 1 sends the KeyPackage to Client 2, e.g., by posting it
+   to a directory from which Client 2 fetches it when it wants to add Client 1
+   to a group.
 
 5. Client 2 verifies the signature on the KeyPackage and extracts the
    UserInfoVCCredential. Client 2 uses OpenID Connect Discovery to fetch the OpenID
@@ -192,8 +211,10 @@ An MLS client validates a VerifiableCredential with the following steps:
 
 * Verify the key binding:
   - Verify that a `vc` claim is present in the UserInfo VC payload.
-  - Verify that the value of the claim is a JSON object that contains a `credentialSubject` field, as defined in Section 4 of openid-userinfo-vc.
-  - Verify `id` field exists and it MUST be a a Decentralized Identifier with DID method jwk (W3c.did-core).
+  - Verify that the value of the claim is a JSON object that contains a
+    `credentialSubject` field, as defined in Section 4 of openid-userinfo-vc.
+  - Verify `id` field exists and it MUST be a a Decentralized Identifier with
+    DID method jwk (W3c.did-core).
   - Verify that the `jwk` field parses as a JWK.
   - Verify that the public key in JWK matches the key in the `id` field.
 
@@ -241,8 +262,6 @@ Type registry.
 | Value            | Name                     | Recommended | Reference |
 |:=================|:=========================|:============|:==========|
 | 0x0003           | vc                       | Y           | RFC XXXX  |
-
-
 
 --- back
 
