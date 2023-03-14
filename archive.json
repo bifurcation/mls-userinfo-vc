@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-12T00:01:48.678987+00:00",
+  "timestamp": "2023-03-14T00:01:50.953812+00:00",
   "repo": "bifurcation/mls-userinfo-vc",
   "labels": [
     {
@@ -50,5 +50,48 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOI7GWf85L1x1-",
+      "title": "RLB Edits",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/1",
+      "state": "MERGED",
+      "author": "bifurcation",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-12T17:44:12Z",
+      "updatedAt": "2023-03-12T17:48:03Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "75174c87abe785389a872cc5d80a23ebac5bf39c",
+      "headRepository": "bifurcation/mls-userinfo-vc",
+      "headRefName": "rlb-notes",
+      "headRefOid": "caeb609dd06b26f317d8696d24f7e2be260bbfbb",
+      "closedAt": "2023-03-12T17:48:03Z",
+      "mergedAt": "2023-03-12T17:48:02Z",
+      "mergedBy": "suhasHere",
+      "mergeCommit": {
+        "oid": "dda2a6bbbaad5db6cd513ad398a60020ff671776"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOI7GWf85PorAX",
+          "commit": {
+            "abbreviatedOid": "caeb609"
+          },
+          "author": "suhasHere",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-12T17:47:58Z",
+          "updatedAt": "2023-03-12T17:47:58Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
 }
