@@ -3,7 +3,7 @@ title: "Additional MLS Credentials"
 abbrev: "Additional MLS Credentials"
 category: info
 
-docname: draft-barnes-mls-userinfo-vc-latest
+docname: draft-barnes-mls-addl-creds-latest
 submissiontype: IETF
 number:
 date:
