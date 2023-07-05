@@ -89,8 +89,8 @@ document are to be interpreted as described in RFC 2119 [RFC2119].
 
 This specification uses terms from the MLS Protocol specification.  In
 particular, we refer to the MLS Credential object, which represents an
-association between a client's identity and the signature key that the client
-will use to messages in the MLS key exchange protocol.
+association between a client's identity and the signature key pair that the
+client will use to sign messages in the MLS key exchange protocol.
 
 # UserInfo Verifiable Credentials
 
@@ -291,7 +291,7 @@ struct {
 } WeakMultiCredential;
 ~~~
 
-The two types of credential are processed in exactly the same way.  The only
+The two types of credentials are processed in exactly the same way.  The only
 difference is in how they are treated when evaluating support by other clients,
 as discussed below.
 
@@ -316,7 +316,7 @@ struct {
 
 The `cipher_suite` for a credential is NOT REQUIRED to match the cipher suite
 for the MLS group in which it is used, but MUST meet the support requirements
-discussed below.
+with regard to support by group members discussed below.
 
 ## Verifying a Multi-Credential
 
@@ -330,7 +330,7 @@ following checks for each binding in the multi-credential:
 * The `signature` field is valid with respect to the `signature_key` value in
   the leaf node.
 
-* Each members of the group supports the credential type of the credential
+* Each member of the group supports the credential type of the credential
   (`multi` or `weak-multi`), and in addition:
   * For `multi`: Each member supports the cipher suite and credential type
     values for every credential binding in the multi-credential.
@@ -340,7 +340,7 @@ following checks for each binding in the multi-credential:
 # Security Considerations
 
 The validation procedures for UserInfoVC credentials verify that a JWT came from
-a given issuer.  It doesn't veirfy that the issuer is authorative for the
+a given issuer.  It doesn't verify that the issuer is authorative for the
 claimed attributes.  The client needs to verify that the issuer is trusted to
 assert the claimed attributes.
 
