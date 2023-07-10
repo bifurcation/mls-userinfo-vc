@@ -44,7 +44,7 @@ informative:
 
 --- abstract
 
-This specification defines two new kinds of credential for use within the
+This specification defines two new kinds of credentials for use within the
 Message Layer Security (MLS) credential framework: UserInfo Verifiable
 Credentials and multi-credentials.  UserInfo Verifiable Credentials allow
 clients to present credentials that associate OpenID Connect attributes to a
