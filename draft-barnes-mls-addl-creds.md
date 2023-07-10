@@ -44,13 +44,14 @@ informative:
 
 --- abstract
 
-This specificatoin extends the Message Layer Security (MLS) credential framework
-with two new kinds of credential: UserInfo Verifiable Credentials and
-multi-credentials.  UserInfo Verifiable Credentials allow clients to present
-credentials that associate OpenID Connect attributes to a key pair held by the
-client.  Multi-credentials allow clients to present authenticated attributes
-from multiple sources, or to present credentials in different formats to support
-heterogeneous credential verifiers.
+This specification defines two new kinds of credential for use within the
+Message Layer Security (MLS) credential framework: UserInfo Verifiable
+Credentials and multi-credentials.  UserInfo Verifiable Credentials allow
+clients to present credentials that associate OpenID Connect attributes to a
+signature key pair held by the client.  Multi-credentials allow clients to
+present authenticated attributes from multiple sources, or to present
+credentials in different formats to support groups with heterogeneous credential
+support.
 
 --- middle
 
@@ -74,11 +75,11 @@ extensions required for OpenID Providers to issue UserInfo VCs.
 
 Multi-credentials address use cases where there might not be a single credential
 that captures all of a client's authenticated attributes.  For example, an
-enterprise messaging client may wish to provide attributes from its messaging
-service, to prove it has a given handle in that service, and from its corporate
-owner, to prove that it belongs to an employee of the corporation.
-Multi-credentials can also be used in migration scenarios, where some clients
-in a group might wish to rely on a newer type of credential, but other clients
+enterprise messaging client may wish to provide attributes both from its messaging
+service, to prove that its user has a given handle in that service, and from its
+corporate owner, to prove that its user is an employee of the corporation.
+Multi-credentials can also be used in migration scenarios, where some clients in
+a group might wish to rely on a newer type of credential, but other clients
 haven't yet been upgraded.
 
 # Terminology
@@ -97,13 +98,13 @@ client will use to sign messages in the MLS key exchange protocol.
 As described in the MLS architecture, MLS requires an Authentication Service
 (AS) as well as a Delivery Service (DS) {{!I-D.ietf-mls-architecture}}.  The full
 security goals of MLS are only realized if the AS and DS are non-colluding.
-In other worlds, applications can deploy MLS to get end-to-end encryption
+In other words, applications can deploy MLS to get end-to-end encryption
 (acting as MLS Delivery Service), but they need to partner with a non-colluding
 Authentication Service in order to achieve full end-to-end security.
 
 OpenID Connect is widely used to integrate identity providers with applications,
 but its current core protocol doesn't provide the binding to cryptographic keys
-required for end-to-end security.  When OpenID Connect is coupled with the
+required for use in MLS.  When OpenID Connect is coupled with the
 "Verifiable Credentials" framework, however, it can be used to provision clients
 with signed "UserInfo VC" objects that contain the critical elements of a
 credential to be used in MLS:
@@ -123,7 +124,7 @@ so that it can be used for authenticating an MLS client. We also describe the
 validation process that MLS clients use to verify UserInfoVC objects that they
 receive via MLS.
 
-## Protocol Overview
+## UserInfo VC Life-Cycle
 
 ~~~ ascii-art
    +----+
@@ -156,8 +157,10 @@ receive via MLS.
 
             OpenID Connect UserInfo VC MLS Credential Flow
 ~~~
+{: #userinfo-vc-life title="The protocol interactions to issue and verify a UserInfo VC" }
 
-The basic steps showing OIDC Verifiable Credential based MLS credential flow are shown above.
+The basic steps showing OIDC Verifiable Credential based MLS credential flow are
+shown in {{userinfo-vc-life}}.
 
 Client 1 is an MLS client that acts as a Holder in the VC model.  Client 2 is
 also an MLS client, but acts in the Verifier role in the VC model.  Both clients
@@ -208,11 +211,11 @@ type is indicated with the CredentialType value `userinfo_vc` (see {{iana}}).
 
 ~~~~~ tls-presentation
 struct {
-    opaque vc<0..2^32-1>;
+    opaque jwt<0..2^32-1>;
 } UserInfoVC;
 ~~~~~
 
-The `vc` field contains the signed JWT-formatted UserInfo VC object
+The `jwt` field contains the signed JWT-formatted UserInfo VC object
 (as defined in {{OpenIDUserInfoVC}}), encoded using UTF-8.
 The payload of object MUST provide `iss` and `vc` claims.  The `iss` claim is
 used to look up the OpenID Provider's metadata.  The `vc` claim contains
@@ -300,7 +303,7 @@ as discussed below.
 A multi-credential consists of a collection of "credential bindings".  Each
 credential binding is a signed statement by the holder of the credential that
 the signature key in the LeafNode belongs to the holder of that credential.
-Specifically, The signature is computed using the MLS `SignWithLabel` function,
+Specifically, the signature is computed using the MLS `SignWithLabel` function,
 with label `"CredentialBindingTBS"` and with a content that covers the contents
 of the CredentialBinding, plus the `signature_key` field from the LeafNode in
 which this credential will be embedded.
@@ -311,7 +314,7 @@ struct {
   Credential credential;
   SignaturePublicKey credential_key;
   SignaturePublicKey signature_key;
-} CredentialBindingTBS
+} CredentialBindingTBS;
 ~~~
 
 The `cipher_suite` for a credential is NOT REQUIRED to match the cipher suite
@@ -320,22 +323,41 @@ with regard to support by group members discussed below.
 
 ## Verifying a Multi-Credential
 
-A client that receives a multi-credential in a LeafNode MUST perform the
-following checks for each binding in the multi-credential:
+A credential binding is supported by a client if the client supports the
+credential type and cipher suite of the binding.  A credential binding is valid
+in the context of a given LeafNode if both of the following are true:
 
-* The `credential_key` in a CredentialBinding corresponds to the specified
-  `credential`, in the same way that the `signature_key` would have to correspond
-  to the credential if the credential were presented in a LeafNode.
+* The `credential` is valid according to the MLS Authentication Service.
+
+* The `credential_key` corresponds to the specified `credential`, in the same
+  way that the `signature_key` would have to correspond to the credential if
+  the credential were presented in a LeafNode.
 
 * The `signature` field is valid with respect to the `signature_key` value in
   the leaf node.
 
-* Each member of the group supports the credential type of the credential
-  (`multi` or `weak-multi`), and in addition:
-  * For `multi`: Each member supports the cipher suite and credential type
-    values for every credential binding in the multi-credential.
-  * For `weak-multi`: Each member supports the cipher suite and credential type
-    values for at least one credential binding in the multi-credential.
+A client that receives a credential of type `multi` in a LeafNode MUST verify
+that all of the following are true:
+
+* All members of the group support credential type `multi`.
+
+* For each credential binding in the multi-credential:
+
+  * Every member of the group supports the cipher suite and credential type
+    values for the binding.
+
+  * The binding is valid in the context of the LeafNode.
+
+A client that receives a credential of type `weak-multi` in a LeafNode MUST verify
+that all of the following are true:
+
+* All members of the group support credential type `multi`.
+
+* Each member of the group supports at least one binding in the
+  multi-credential.  (Different members may support different subsets.)
+
+* Every binding that this client supports is valid in the context of the
+  LeafNode.
 
 # Security Considerations
 
@@ -365,7 +387,3 @@ Type registry.
 
 --- back
 
-# Acknowledgments
-{:numbered="false"}
-
-TODO acknowledge.
