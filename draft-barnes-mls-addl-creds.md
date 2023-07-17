@@ -265,8 +265,8 @@ equivalent MLS signature scheme.
 | `EC`  | `P-256`   | ECDSA with P-256 and SHA-256 |
 | `EC`  | `P-384`   | ECDSA with P-384 and SHA-384 |
 | `EC`  | `P-521`   | ECDSA with P-521 and SHA-512 |
-| `EC`  | `Ed25519` | Ed25519                      |
-| `EC`  | `Ed448`   | Ed448                        |
+| `OKP` | `Ed25519` | Ed25519                      |
+| `OKP` | `Ed448`   | Ed448                        |
 
 
 # Multi-Credentials
