@@ -322,13 +322,13 @@ MLS CipherSuite value which uses that SignatureAlgorithm.
 
 | CipherSuite Value | SignatureAlgorithm Value | SignatureAlgorithm |
 |:------------------|:-------------------------|:-------------------|
-| 0x0001 | 0x0001 | Ed25519          |
-| 0x0002 | 0x0002 | P256 (secp256r1) |
-| 0x0003 | 0x0001 | Ed25519          |
-| 0x0004 | 0x0004 | Ed448            |
-| 0x0005 | 0x0005 | P521 (secp521r1) |
-| 0x0006 | 0x0004 | Ed448            |
-| 0x0007 | 0x0007 | P384 (secp384r1) |
+| 0x0001 | 0x0001 | ed25519                |
+| 0x0002 | 0x0002 | ecdsa_secp256r1_sha256 |
+| 0x0003 | 0x0001 | ed25519                |
+| 0x0004 | 0x0004 | ed448                  |
+| 0x0005 | 0x0005 | ecdsa_secp521r1_sha512 |
+| 0x0006 | 0x0004 | ed448                  |
+| 0x0007 | 0x0007 | ecdsa_secp384r1_sha384 |
 
 
 The `signature_algorithm` for a credential is NOT REQUIRED to match the signature
