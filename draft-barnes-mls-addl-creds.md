@@ -126,12 +126,12 @@ receive via MLS.
 
 ## UserInfo VC Life-Cycle
 
-~~~ ascii-art
+~~~ aasvg
    +----+
    |    | (1) Generate signature key pair
    |    V
 +----------+                                   +----------+
-|          |<~~~(2) OpenID Connect Login~~~~~~>|          |
+|          |<===(2) OpenID Connect Login======>|          |
 |          |                                   |          |
 |          |                                   |          |
 |          |-------(3) Credential Request----->|  OpenID  |
@@ -141,15 +141,15 @@ receive via MLS.
 |          |<------(4) Credential Response-----|          |
 |          |         (credential)              |          |
 +----------+                                   +----------+
-      :                                             ^
-      : (5) UserInfoVC in MLS KeyPackage            |
-      :                                             |
+      |                                             ^
+      | (5) UserInfoVC in MLS KeyPackage            |
+      |                                             |
       v                                             |
 +----------+                                        |
 |          |                                        |
 |          | (6) Fetch JWK set, Verify JWT          |
 |          |        Signature                       |
-| Client 2 |<----------------------------------------
+| Client 2 |<---------------------------------------+
 |          |----+
 |          |    | (7) Validate vc claim using
 |          |<---+     OP's JWK
