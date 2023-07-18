@@ -260,7 +260,7 @@ should be associated with the MLS client that presented the credential.
 Below table maps JWK key types (`kty`) and elliptic curves (`crv`) to the
 equivalent MLS signature scheme.
 
-| `kty` | `crv`     | TLS/MLS signature scheme     |
+| `kty` | `crv`     | MLS signature scheme         |
 |:-----:|:---------:|:-----------------------------|
 | `EC`  | `P-256`   | ECDSA with P-256 and SHA-256 |
 | `EC`  | `P-384`   | ECDSA with P-384 and SHA-384 |
@@ -310,21 +310,36 @@ which this credential will be embedded.
 
 ~~~ tls-presentation
 struct {
-  CipherSuite cipher_suite;
+  SignatureAlgorithm signature_algorithm;
   Credential credential;
   SignaturePublicKey credential_key;
   SignaturePublicKey signature_key;
 } CredentialBindingTBS;
 ~~~
 
-The `cipher_suite` for a credential is NOT REQUIRED to match the cipher suite
+The SignatureAlgorithm is an unsigned 16-bit integer corresponding to the first
+MLS CipherSuite value which uses that SignatureAlgorithm.
+
+| CipherSuite Value | SignatureAlgorithm Value | SignatureAlgorithm |
+|:------------------|:-------------------------|:-------------------|
+| 0x0001 | 0x0001 | ed25519                |
+| 0x0002 | 0x0002 | ecdsa_secp256r1_sha256 |
+| 0x0003 | 0x0001 | ed25519                |
+| 0x0004 | 0x0004 | ed448                  |
+| 0x0005 | 0x0005 | ecdsa_secp521r1_sha512 |
+| 0x0006 | 0x0004 | ed448                  |
+| 0x0007 | 0x0007 | ecdsa_secp384r1_sha384 |
+
+
+The `signature_algorithm` for a credential is NOT REQUIRED to match the signature
+algorithm of the cipher suite
 for the MLS group in which it is used, but MUST meet the support requirements
 with regard to support by group members discussed below.
 
 ## Verifying a Multi-Credential
 
 A credential binding is supported by a client if the client supports the
-credential type and cipher suite of the binding.  A credential binding is valid
+credential type and signature algorithm of the binding.  A credential binding is valid
 in the context of a given LeafNode if both of the following are true:
 
 * The `credential` is valid according to the MLS Authentication Service.
@@ -343,7 +358,7 @@ that all of the following are true:
 
 * For each credential binding in the multi-credential:
 
-  * Every member of the group supports the cipher suite and credential type
+  * Every member of the group supports the signature algorithm and credential type
     values for the binding.
 
   * The binding is valid in the context of the LeafNode.
