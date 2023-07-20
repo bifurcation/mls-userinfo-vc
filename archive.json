@@ -1,0 +1,376 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-07-20T00:01:38.942833+00:00",
+  "repo": "bifurcation/mls-userinfo-vc",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 7,
+      "id": "I_kwDOI7GWf85r01LX",
+      "title": "spec relies on underspecified DID JWK method",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/issues/7",
+      "state": "OPEN",
+      "author": "rohan-wire",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The DID JWK method is required in this draft and in OpenID Connect UserInfo VC, but this DID method has a number of undesirable properties:\r\n1) it is not a stable reference. it is [here](https://github.com/quartzjer/did-jwk/blob/main/spec.md) in somebody's github repo.\r\n\r\n2) there are multiple possible legal values of the DID JWK for each key. That sucks. From the spec:\r\n\r\n\"This method does not provide any guarantees of a 1:1 relationship between the identifier and the public key. The same public key can result in many different identifiers due to variances in how the JWK JSON is serialized. This is a design choice, implementations should always store the fully serialized did:jwk: URI and not the underlying JWK.\"\r\n\r\n3) it can include optional values which are either irrelevant for the purpose of providing and identifying the public key, or need to be validated. For example the usage is mandatory. \r\n\r\n4) DID URIs are associated with the blockchain and cryptocurrency, which has undesirable associations of both complexity and ethics.\r\n\r\n5) Libraries for validation and comparison of DIDs tend to be quite large and complicated because of the huge number of DID methods which have been defined.\r\n\r\nI suggest using instead a JWK Thumbprint (defined in RFC 7638 and updated by RFC 8037) instead. \r\n\r\nAddressing all five points we could define a new URN scheme such as:\r\n`urn:ietf:jose:jwk-thumb:<base64url-of-jwk-thumbprint>`\r\n\r\nAddressing the first three points, we could define a new `jwkthumb` DID method and use it instead:\r\n`did:jwkthumb:<base64url-of-jwk-thumbprint>`\r\n\r\nI would be happy to write up a new document proposing either.",
+      "createdAt": "2023-07-18T03:28:33Z",
+      "updatedAt": "2023-07-18T05:11:45Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOI7GWf85L1x1-",
+      "title": "RLB Edits",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/1",
+      "state": "MERGED",
+      "author": "bifurcation",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-12T17:44:12Z",
+      "updatedAt": "2023-03-12T17:48:03Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "75174c87abe785389a872cc5d80a23ebac5bf39c",
+      "headRepository": "bifurcation/mls-userinfo-vc",
+      "headRefName": "rlb-notes",
+      "headRefOid": "caeb609dd06b26f317d8696d24f7e2be260bbfbb",
+      "closedAt": "2023-03-12T17:48:03Z",
+      "mergedAt": "2023-03-12T17:48:02Z",
+      "mergedBy": "suhasHere",
+      "mergeCommit": {
+        "oid": "dda2a6bbbaad5db6cd513ad398a60020ff671776"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOI7GWf85PorAX",
+          "commit": {
+            "abbreviatedOid": "caeb609"
+          },
+          "author": "suhasHere",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-12T17:47:58Z",
+          "updatedAt": "2023-03-12T17:47:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOI7GWf85Uj7at",
+      "title": "Reframe as 'Additional MLS Credentials'",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/2",
+      "state": "MERGED",
+      "author": "bifurcation",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR reframes the document as an \"Additional MLS Credentials\" document instead of just a UserInfo VC document.  We do this in order to add a \"multi-credential\" format.",
+      "createdAt": "2023-07-03T21:45:59Z",
+      "updatedAt": "2023-07-10T15:17:39Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "dda2a6bbbaad5db6cd513ad398a60020ff671776",
+      "headRepository": "bifurcation/mls-userinfo-vc",
+      "headRefName": "multi",
+      "headRefOid": "cbb467cfb3033a99c74208a2f8161238f8ac245c",
+      "closedAt": "2023-07-10T15:17:39Z",
+      "mergedAt": "2023-07-10T15:17:39Z",
+      "mergedBy": "bifurcation",
+      "mergeCommit": {
+        "oid": "761654dd92dccd14e12d02bb3cba3eabd215e6c9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOI7GWf85aHtRu",
+          "commit": {
+            "abbreviatedOid": "d37b3a9"
+          },
+          "author": "suhasHere",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Minor nits, but overall looks good to me",
+          "createdAt": "2023-07-04T03:02:37Z",
+          "updatedAt": "2023-07-04T03:21:11Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "s/use to/use for /",
+              "createdAt": "2023-07-04T03:02:38Z",
+              "updatedAt": "2023-07-04T03:21:11Z"
+            },
+            {
+              "originalPosition": 210,
+              "body": "s/MUST meet the support / MUST support",
+              "createdAt": "2023-07-04T03:06:03Z",
+              "updatedAt": "2023-07-04T03:21:11Z"
+            },
+            {
+              "originalPosition": 225,
+              "body": "s/members/member",
+              "createdAt": "2023-07-04T03:07:18Z",
+              "updatedAt": "2023-07-04T03:21:11Z"
+            },
+            {
+              "originalPosition": 238,
+              "body": "s/veirfy/verify",
+              "createdAt": "2023-07-04T03:08:17Z",
+              "updatedAt": "2023-07-04T03:21:11Z"
+            },
+            {
+              "originalPosition": 185,
+              "body": "s/credential/credentials/",
+              "createdAt": "2023-07-04T03:11:03Z",
+              "updatedAt": "2023-07-04T03:21:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOI7GWf85avKN_",
+          "commit": {
+            "abbreviatedOid": "f4ba482"
+          },
+          "author": "suhasHere",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T15:06:00Z",
+          "updatedAt": "2023-07-10T15:06:01Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "s/credential/crdentials",
+              "createdAt": "2023-07-10T15:06:01Z",
+              "updatedAt": "2023-07-10T15:06:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOI7GWf85avL27",
+          "commit": {
+            "abbreviatedOid": "f4ba482"
+          },
+          "author": "suhasHere",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-10T15:08:49Z",
+          "updatedAt": "2023-07-10T15:08:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOI7GWf85avP-r",
+          "commit": {
+            "abbreviatedOid": "f4ba482"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-10T15:17:28Z",
+          "updatedAt": "2023-07-10T15:17:28Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\nThis specification defines two new kinds of credentials for use within the\r\n```",
+              "createdAt": "2023-07-10T15:17:28Z",
+              "updatedAt": "2023-07-10T15:17:28Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOI7GWf85VZH5-",
+      "title": "Branding",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/3",
+      "state": "MERGED",
+      "author": "raphaelrobert",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-13T08:35:03Z",
+      "updatedAt": "2023-07-18T05:14:51Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "761654dd92dccd14e12d02bb3cba3eabd215e6c9",
+      "headRepository": "raphaelrobert/mls-userinfo-vc",
+      "headRefName": "patch-1",
+      "headRefOid": "d65c8c85cbc51f4c68ec3361e89b203473bf5e8b",
+      "closedAt": "2023-07-18T05:14:50Z",
+      "mergedAt": "2023-07-18T05:14:50Z",
+      "mergedBy": "rohan-wire",
+      "mergeCommit": {
+        "oid": "cf0a59d456a863225697a55c005b4fa8b7a6c11b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOI7GWf85bce82",
+          "commit": {
+            "abbreviatedOid": "d65c8c8"
+          },
+          "author": "rohan-wire",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-18T05:13:55Z",
+          "updatedAt": "2023-07-18T05:13:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOI7GWf85VuK2D",
+      "title": "make Figure use AASVG rendering",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/4",
+      "state": "OPEN",
+      "author": "rohan-wire",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I lightly edited the ascii art so it could be rendered by aasvg",
+      "createdAt": "2023-07-17T22:27:17Z",
+      "updatedAt": "2023-07-17T22:38:31Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "761654dd92dccd14e12d02bb3cba3eabd215e6c9",
+      "headRepository": "rohan-wire/mls-userinfo-vc",
+      "headRefName": "rohan/aasvg",
+      "headRefOid": "94b91470e7bd22603e5fd040eec729faa5a8a0b1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOI7GWf85VuOLS",
+      "title": "use correct key type (OKP) for Ed25519/Ed448",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/5",
+      "state": "MERGED",
+      "author": "rohan-wire",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-17T22:40:59Z",
+      "updatedAt": "2023-07-17T23:12:52Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "761654dd92dccd14e12d02bb3cba3eabd215e6c9",
+      "headRepository": "bifurcation/mls-userinfo-vc",
+      "headRefName": "rohan/okp",
+      "headRefOid": "8de16c302270f18d812d64b7cebb86dd52f22d24",
+      "closedAt": "2023-07-17T22:54:59Z",
+      "mergedAt": "2023-07-17T22:54:59Z",
+      "mergedBy": "bifurcation",
+      "mergeCommit": {
+        "oid": "6c6790d7c59890f3e15c721d6fe57a2b8b710ee0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOI7GWf85bbC0y",
+          "commit": {
+            "abbreviatedOid": "8de16c3"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-17T22:54:54Z",
+          "updatedAt": "2023-07-17T22:54:54Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOI7GWf85Vuv8u",
+      "title": "change cipher_suite to signature_algorithm",
+      "url": "https://github.com/bifurcation/mls-userinfo-vc/pull/6",
+      "state": "OPEN",
+      "author": "rohan-wire",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft talks about cipher suites, but it seems that only the signature algorithms are relevant. This PR proposes alternate language based only on signature algorithms.",
+      "createdAt": "2023-07-18T01:35:21Z",
+      "updatedAt": "2023-07-18T21:46:20Z",
+      "baseRepository": "bifurcation/mls-userinfo-vc",
+      "baseRefName": "main",
+      "baseRefOid": "6c6790d7c59890f3e15c721d6fe57a2b8b710ee0",
+      "headRepository": "rohan-wire/mls-userinfo-vc",
+      "headRefName": "rohan/signaturealgs",
+      "headRefOid": "71c92030443f18d2c375663d7d9b21c7528a89ef",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
