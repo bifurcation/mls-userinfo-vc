@@ -17,23 +17,23 @@ present authenticated attributes from multiple sources, or to present
 credentials in different formats to support groups with heterogeneous credential
 support. 
     " name="description">
-<meta content="xml2rfc 3.17.4" name="generator">
+<meta content="xml2rfc 3.20.0" name="generator">
 <meta content="draft-barnes-mls-addl-creds-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.4
-    Python 3.11.4
-    ConfigArgParse 1.5.3
+  xml2rfc 3.20.0
+    Python 3.11.8
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
-    platformdirs 3.8.0
+    lxml 4.9.3
+    platformdirs 4.2.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.13
 -->
 <link href="draft-barnes-mls-addl-creds.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -656,7 +656,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -749,7 +749,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -873,16 +873,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -895,6 +892,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -996,28 +996,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1054,11 +1032,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Additional MLS Credentials</td>
-<td class="right">July 2023</td>
+<td class="right">March 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Barnes &amp; Nandakumar</td>
-<td class="center">Expires 11 January 2024</td>
+<td class="center">Expires 5 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1049,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-barnes-mls-addl-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-07-10" class="published">10 July 2023</time>
+<time datetime="2024-03-04" class="published">4 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-01-11">11 January 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-05">5 September 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1136,7 +1114,7 @@ support.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1145,7 +1123,7 @@ support.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1234,9 +1212,11 @@ The MLS credential structure is extensible: New MLS credential formats can be
 defined which support new mechanisms for authenticating clients.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">In this document, we define two new types of credential:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-3.1">Credentials based on OpenID Connect UserInfo Verifiable Credentials<a href="#section-1-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1-3.1">
+          <p id="section-1-3.1.1">Credentials based on OpenID Connect UserInfo Verifiable Credentials<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-3.2">Multi-credentials that present several credentials at once<a href="#section-1-3.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-3.2">
+          <p id="section-1-3.2.1">Multi-credentials that present several credentials at once<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-1-4">UserInfo Verifiable Credentials (VCs) are a mechanism by which an OpenID
@@ -1286,11 +1266,14 @@ required for use in MLS.  When OpenID Connect is coupled with the
 with signed "UserInfo VC" objects that contain the critical elements of a
 credential to be used in MLS:<a href="#section-3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-3.1">Identity attributes for the user of a client<a href="#section-3-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3-3.1">
+          <p id="section-3-3.1.1">Identity attributes for the user of a client<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-3.2">A public key whose private key is held by a client<a href="#section-3-3.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-3.2">
+          <p id="section-3-3.2.1">A public key whose private key is held by a client<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-3.3">A signature over the above by a trusted identity provider<a href="#section-3-3.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-3.3">
+          <p id="section-3-3.3.1">A signature over the above by a trusted identity provider<a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-4">The required updates to OpenID Connect are specfied in <span>[<a href="#OpenIDUserInfoVC" class="cite xref">OpenIDUserInfoVC</a>]</span>.  That
@@ -1353,36 +1336,44 @@ also an MLS client, but acts in the Verifier role in the VC model.  Both clients
 implement certain OpenID Connect operations to obtain and verify UserInfo VC
 objects.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1-4">
-<li id="section-3.1-4.1">Client 1 generates a signature key pair using an algorithm that is supported
-by both MLS and UserInfo VC.<a href="#section-3.1-4.1" class="pilcrow">¶</a>
+<li id="section-3.1-4.1">
+            <p id="section-3.1-4.1.1">Client 1 generates a signature key pair using an algorithm that is supported
+by both MLS and UserInfo VC.<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.2">Client 1 performs an OpenID Connect login interaction with the scope
-"userinfo_credential"  to obtain UserInfo VCs.<a href="#section-3.1-4.2" class="pilcrow">¶</a>
+          <li id="section-3.1-4.2">
+            <p id="section-3.1-4.2.1">Client 1 performs an OpenID Connect login interaction with the scope
+"userinfo_credential"  to obtain UserInfo VCs.<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.3">Client 1 sends a Credential Request specifying that it desires a UserInfo VC,
+          <li id="section-3.1-4.3">
+            <p id="section-3.1-4.3.1">Client 1 sends a Credential Request specifying that it desires a UserInfo VC,
 together with a proof that it controls the private key of a signature key pair
-and the access token.<a href="#section-3.1-4.3" class="pilcrow">¶</a>
+and the access token.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.4">The OpenID Provider verifies the proof and create a Credential Response
+          <li id="section-3.1-4.4">
+            <p id="section-3.1-4.4.1">The OpenID Provider verifies the proof and create a Credential Response
 containing the UserInfo VC attesting the claims that
 would have been provided by the UserInfo endpoint and public key
 corresponding to the private key used to compute the proof in the Credential
-Request.<a href="#section-3.1-4.4" class="pilcrow">¶</a>
+Request.<a href="#section-3.1-4.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.5">Client 1 generates a <code>UserInfoVC</code> MLS Credential object with the
+          <li id="section-3.1-4.5">
+            <p id="section-3.1-4.5.1">Client 1 generates a <code>UserInfoVC</code> MLS Credential object with the
 signed UserInfo VC JWT. Client 1 embeds the <code>UserInfoVC</code> in an MLS
 KeyPackage object and signs the KeyPackage object with the corresponding
-private key.<a href="#section-3.1-4.5" class="pilcrow">¶</a>
+private key.<a href="#section-3.1-4.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.6">Client 1 sends the KeyPackage to Client 2, e.g., by posting it to a directory
-from which Client 2 fetches it when it wants to add Client 1 to a group.<a href="#section-3.1-4.6" class="pilcrow">¶</a>
+          <li id="section-3.1-4.6">
+            <p id="section-3.1-4.6.1">Client 1 sends the KeyPackage to Client 2, e.g., by posting it to a directory
+from which Client 2 fetches it when it wants to add Client 1 to a group.<a href="#section-3.1-4.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.7">Client 2 verifies the signature on the KeyPackage and extracts the
+          <li id="section-3.1-4.7">
+            <p id="section-3.1-4.7.1">Client 2 verifies the signature on the KeyPackage and extracts the
 UserInfoVC credential. Client 2 uses OpenID Connect Discovery to fetch the OpenID
-Provider's JWK set.<a href="#section-3.1-4.7" class="pilcrow">¶</a>
+Provider's JWK set.<a href="#section-3.1-4.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-4.8">Client 2 verifies the signed UserInfo VC using the the appropriate key from the
-OpenID Provider's JWK set.<a href="#section-3.1-4.8" class="pilcrow">¶</a>
+          <li id="section-3.1-4.8">
+            <p id="section-3.1-4.8.1">Client 2 verifies the signed UserInfo VC using the the appropriate key from the
+OpenID Provider's JWK set.<a href="#section-3.1-4.8.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <p id="section-3.1-5">If all checks pass,  Client 2 has a high degree of assurance of the identity of
@@ -1423,39 +1414,49 @@ public key as a JWK.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.3-1">An MLS client validates a UserInfoVC credential in the context of an MLS
 LeafNode with the following steps:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-2.1">Verify that the <code>jwt</code> field parses successfully into a JWT [!@RFC7519], whose
-payload parses into UserInfo object as defined in Section 5.3.2 of [!@OpenID].<a href="#section-3.3-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.3-2.1">
+            <p id="section-3.3-2.1.1">Verify that the <code>jwt</code> field parses successfully into a JWT [!@RFC7519], whose
+payload parses into UserInfo object as defined in Section 5.3.2 of [!@OpenID].<a href="#section-3.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-2.2">Verify that an <code>iss</code> claim is present in the UserInfo VC payload and that "iss"
+          <li class="normal" id="section-3.3-2.2">
+            <p id="section-3.3-2.2.1">Verify that an <code>iss</code> claim is present in the UserInfo VC payload and that "iss"
 value represents and issuer that is trusted according to the client's local
-policy.<a href="#section-3.3-2.2" class="pilcrow">¶</a>
+policy.<a href="#section-3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-2.3">
             <p id="section-3.3-2.3.1">Verify the JWT signature:<a href="#section-3.3-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-2.3.2.1">Fetch the issuer metadata using OIDC Discovery [@!OpenID.Discovery].<a href="#section-3.3-2.3.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.3-2.3.2.1">
+                <p id="section-3.3-2.3.2.1.1">Fetch the issuer metadata using OIDC Discovery [@!OpenID.Discovery].<a href="#section-3.3-2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.3.2.2">Use the <code>jwks_uri</code> field in the metadata to fetch the JWK set.<a href="#section-3.3-2.3.2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.3.2.2">
+                <p id="section-3.3-2.3.2.2.1">Use the <code>jwks_uri</code> field in the metadata to fetch the JWK set.<a href="#section-3.3-2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.3.2.3">Verify that the JWT signature verifies under one of the keys in the JWK
-set.<a href="#section-3.3-2.3.2.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.3.2.3">
+                <p id="section-3.3-2.3.2.3.1">Verify that the JWT signature verifies under one of the keys in the JWK
+set.<a href="#section-3.3-2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
           <li class="normal" id="section-3.3-2.4">
             <p id="section-3.3-2.4.1">Verify the key binding:<a href="#section-3.3-2.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-2.4.2.1">Verify that a <code>vc</code> claim is present in the UserInfo VC payload.<a href="#section-3.3-2.4.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.3-2.4.2.1">
+                <p id="section-3.3-2.4.2.1.1">Verify that a <code>vc</code> claim is present in the UserInfo VC payload.<a href="#section-3.3-2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.4.2.2">Verify that the value of the claim is a JSON object that contains a
-<code>credentialSubject</code> field, as defined in Section 4 of openid-userinfo-vc.<a href="#section-3.3-2.4.2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.4.2.2">
+                <p id="section-3.3-2.4.2.2.1">Verify that the value of the claim is a JSON object that contains a
+<code>credentialSubject</code> field, as defined in Section 4 of openid-userinfo-vc.<a href="#section-3.3-2.4.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.4.2.3">Verify <code>id</code> field exists and it MUST be a a Decentralized Identifier with
-DID method jwk (W3c.did-core).<a href="#section-3.3-2.4.2.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.4.2.3">
+                <p id="section-3.3-2.4.2.3.1">Verify <code>id</code> field exists and it MUST be a a Decentralized Identifier with
+DID method jwk (W3c.did-core).<a href="#section-3.3-2.4.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.4.2.4">Verify that the <code>jwk</code> field parses as a JWK.<a href="#section-3.3-2.4.2.4" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.4.2.4">
+                <p id="section-3.3-2.4.2.4.1">Verify that the <code>jwk</code> field parses as a JWK.<a href="#section-3.3-2.4.2.4.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.3-2.4.2.5">Verify that the <code>signature_key</code> in the LeafNode matches the key in the <code>id</code> field.<a href="#section-3.3-2.4.2.5" class="pilcrow">¶</a>
+              <li class="normal" id="section-3.3-2.4.2.5">
+                <p id="section-3.3-2.4.2.5.1">Verify that the <code>signature_key</code> in the LeafNode matches the key in the <code>id</code> field.<a href="#section-3.3-2.4.2.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1601,28 +1602,34 @@ with regard to support by group members discussed below.<a href="#section-4.1-3"
 credential type and cipher suite of the binding.  A credential binding is valid
 in the context of a given LeafNode if both of the following are true:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-2.1">The <code>credential</code> is valid according to the MLS Authentication Service.<a href="#section-4.2-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.2-2.1">
+            <p id="section-4.2-2.1.1">The <code>credential</code> is valid according to the MLS Authentication Service.<a href="#section-4.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-2.2">The <code>credential_key</code> corresponds to the specified <code>credential</code>, in the same
+          <li class="normal" id="section-4.2-2.2">
+            <p id="section-4.2-2.2.1">The <code>credential_key</code> corresponds to the specified <code>credential</code>, in the same
 way that the <code>signature_key</code> would have to correspond to the credential if
-the credential were presented in a LeafNode.<a href="#section-4.2-2.2" class="pilcrow">¶</a>
+the credential were presented in a LeafNode.<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-2.3">The <code>signature</code> field is valid with respect to the <code>signature_key</code> value in
-the leaf node.<a href="#section-4.2-2.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.2-2.3">
+            <p id="section-4.2-2.3.1">The <code>signature</code> field is valid with respect to the <code>signature_key</code> value in
+the leaf node.<a href="#section-4.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-4.2-3">A client that receives a credential of type <code>multi</code> in a LeafNode MUST verify
 that all of the following are true:<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-4.1">All members of the group support credential type <code>multi</code>.<a href="#section-4.2-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.2-4.1">
+            <p id="section-4.2-4.1.1">All members of the group support credential type <code>multi</code>.<a href="#section-4.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-4.2">
             <p id="section-4.2-4.2.1">For each credential binding in the multi-credential:<a href="#section-4.2-4.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-4.2.2.1">Every member of the group supports the cipher suite and credential type
-values for the binding.<a href="#section-4.2-4.2.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.2-4.2.2.1">
+                <p id="section-4.2-4.2.2.1.1">Every member of the group supports the cipher suite and credential type
+values for the binding.<a href="#section-4.2-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-4.2-4.2.2.2">The binding is valid in the context of the LeafNode.<a href="#section-4.2-4.2.2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-4.2-4.2.2.2">
+                <p id="section-4.2-4.2.2.2.1">The binding is valid in the context of the LeafNode.<a href="#section-4.2-4.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1630,13 +1637,16 @@ values for the binding.<a href="#section-4.2-4.2.2.1" class="pilcrow">¶</a>
 <p id="section-4.2-5">A client that receives a credential of type <code>weak-multi</code> in a LeafNode MUST verify
 that all of the following are true:<a href="#section-4.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.2-6.1">All members of the group support credential type <code>multi</code>.<a href="#section-4.2-6.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.2-6.1">
+            <p id="section-4.2-6.1.1">All members of the group support credential type <code>multi</code>.<a href="#section-4.2-6.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-6.2">Each member of the group supports at least one binding in the
-multi-credential.  (Different members may support different subsets.)<a href="#section-4.2-6.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.2-6.2">
+            <p id="section-4.2-6.2.1">Each member of the group supports at least one binding in the
+multi-credential.  (Different members may support different subsets.)<a href="#section-4.2-6.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.2-6.3">Every binding that this client supports is valid in the context of the
-LeafNode.<a href="#section-4.2-6.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.2-6.3">
+            <p id="section-4.2-6.3.1">Every binding that this client supports is valid in the context of the
+LeafNode.<a href="#section-4.2-6.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1711,6 +1721,7 @@ Type registry.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
+<div id="sec-normative-references">
 <section id="section-8">
       <h2 id="name-normative-references">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -1718,7 +1729,7 @@ Type registry.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <dl class="references">
 <dt id="I-D.ietf-mls-architecture">[I-D.ietf-mls-architecture]</dt>
       <dd>
-<span class="refAuthor">Beurdouche, B.</span>, <span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Omara, E.</span>, <span class="refAuthor">Inguva, S.</span>, and <span class="refAuthor">A. Duric</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-architecture-10</span>, <time datetime="2022-12-16" class="refDate">16 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-architecture-10">https://datatracker.ietf.org/doc/html/draft-ietf-mls-architecture-10</a>&gt;</span>. </dd>
+<span class="refAuthor">Beurdouche, B.</span>, <span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Omara, E.</span>, <span class="refAuthor">Inguva, S.</span>, and <span class="refAuthor">A. Duric</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-architecture-12</span>, <time datetime="2024-03-03" class="refDate">3 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-architecture-12">https://datatracker.ietf.org/doc/html/draft-ietf-mls-architecture-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-mls-protocol">[I-D.ietf-mls-protocol]</dt>
       <dd>
@@ -1730,6 +1741,7 @@ Type registry.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 <div id="authors-addresses">
 <section id="appendix-A">
       <h2 id="name-authors-addresses">

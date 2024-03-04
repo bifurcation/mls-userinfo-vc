@@ -5,7 +5,7 @@
 Messaging Layer Security                                       R. Barnes
 Internet-Draft                                             S. Nandakumar
 Intended status: Informational                                     Cisco
-Expires: 18 January 2024                                    17 July 2023
+Expires: 5 September 2024                                   4 March 2024
 
 
                        Additional MLS Credentials
@@ -53,11 +53,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 January 2024.
+   This Internet-Draft will expire on 5 September 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -327,9 +327,9 @@ Table of Contents
              +-----+---------+------------------------------+
              |  EC |  P-521  | ECDSA with P-521 and SHA-512 |
              +-----+---------+------------------------------+
-             | OKP | Ed25519 | Ed25519                      |
+             |  EC | Ed25519 | Ed25519                      |
              +-----+---------+------------------------------+
-             | OKP |  Ed448  | Ed448                        |
+             |  EC |  Ed448  | Ed448                        |
              +-----+---------+------------------------------+
 
                                  Table 1
@@ -464,9 +464,9 @@ Table of Contents
               Beurdouche, B., Rescorla, E., Omara, E., Inguva, S., and
               A. Duric, "The Messaging Layer Security (MLS)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-mls-architecture-10, 16 December 2022,
+              ietf-mls-architecture-12, 3 March 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-mls-
-              architecture-10>.
+              architecture-12>.
 
    [I-D.ietf-mls-protocol]
               Barnes, R., Beurdouche, B., Robert, R., Millican, J.,
